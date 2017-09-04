@@ -20,30 +20,46 @@ shinyServer(function(input, output) {
     aleatorio2=rnorm(z, mean= 4, sd=0.5)
     
     suma=aleatorio1+aleatorio2
-    #hist(suma) saca frecuencia, no probabilidad
-   
+    #hist(suma) saca frecuencia, no probabilidad. HIST(SUMA, probabiliy=TRUE)
     
     
     yteorica=dnorm(z, 4, sqrt(1^2+0.5^2)) #si sumo dos normales, la normal resultante es una normal. media=suma, desv=suma
     #no sumo desviaciones estandar en la nomral, sino varianzas
    
-    
+    yemp=density(suma)
     
     x    <- suma 
     bins <- seq(min(x), max(x), length.out = input$bins + 1)
     
     hist(suma, breaks = bins, probability=TRUE) #histograma de funcion de probabilidad
     
-    lines(z,yteorica, lwd=4, col="red")
+  
+    
+    
+    if (input$emp) {
+      lines(yemp, lwd=4, col="blue")
+    }
+    
+    if (input$teo) {
+      lines(z,yteorica, lwd=4, col="red")
+      
+    }
+    
+    
+  
+    
+   
     # draw the histogram with the specified number of bins
     #hist(x, breaks = bins, col = 'darkgray', border = 'white')
     
     
-    #x    <- faithful[, 2] 
-    #bins <- seq(min(x), max(x), length.out = input$bins + 1)
+
     
-    # draw the histogram with the specified number of bins
-    #hist(x, breaks = bins, col = 'darkgray', border = 'white')
+  })
+  
+  output$summary <- renderPrint({
+    summary(suma)
+    
     
   })
   

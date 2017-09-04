@@ -22,12 +22,30 @@ shinyUI(fluidPage(
                    "Number of bins:",
                    min = 1,
                    max = 50,
-                   value = 30)
-    ),
+                   value = 30),
+       
+        checkboxInput(inputId = "emp",
+                     label = "Distribución Empírica",
+                     value = FALSE),
+       
+        checkboxInput(inputId = "teo",
+                     label = "Distribución Teórica",
+                     value = FALSE),
+       
+       radioButtons("dist", "Distribution type:",
+                    c("Normal" = "norm",
+                      "Uniform" = "unif",
+                      "Log-normal" = "lnorm",
+                      "Exponential" = "exp"))
+       )
+    ,
+
     
     # Show a plot of the generated distribution
     mainPanel(
-       plotOutput("distPlot")
+       plotOutput("distPlot"),
+       verbatimTextOutput("summary")
+       
     )
   )
 ))
